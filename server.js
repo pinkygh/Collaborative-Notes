@@ -1,11 +1,11 @@
 import pkg from "pg";
 const { Client } = pkg;
 const conn = new Client({
-  host: "localhost",
-  user: "postgres",
-  port: 5432,
-  password: "psqlPass1.",
-  database: "demodb"
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "postgres",
+  password: process.env.DB_PASSWORD || "psqlPass1.",
+  database: process.env.DB_NAME || "demodb",
+  port: process.env.DB_PORT || 5432,
 });
 
 import express from "express";
@@ -36,7 +36,7 @@ async function closeConnection(conn){
 
 async function startserver(){
     await connectToDb(conn);
-
+    console.log(process.env.DB_HOST); 
     app.listen(3000,function(req,res){
         
         console.log("server started at 3000")
