@@ -1,13 +1,17 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import pkg from "pg";
 const { Client } = pkg;
 const conn = new Client({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "postgres",
-  password: process.env.DB_PASSWORD || "psqlPass1.",
-  database: process.env.DB_NAME || "demodb",
-  port: process.env.DB_PORT || 5432,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
 });
 
+//console.log("DB_USER:", process.env.DB_USER, "DB_PASSWORD type:", typeof process.env.DB_PASSWORD, process.env);
 import express from "express";
 const app = express();
 
@@ -37,9 +41,9 @@ async function closeConnection(conn){
 async function startserver(){
     await connectToDb(conn);
     console.log(process.env.DB_HOST); 
-    app.listen(3000,function(req,res){
+    app.listen(process.env.PORT,function(req,res){
         
-        console.log("server started at 3000")
+        console.log("server started at ",process.env.PORT)
     ;});
 }
 

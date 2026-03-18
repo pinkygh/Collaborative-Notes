@@ -1,10 +1,9 @@
 import  express from "express";
 import bcrypt from "bcrypt";
-import pkg from "pg";
 import jwt from "jsonwebtoken";
-const { Client } = pkg;
 
 import { app, startserver, closeConnection, conn} from "./server.js";
+
 await startserver();
 
 app.use(express.json());
@@ -25,7 +24,7 @@ app.use(async (req,res,next) => {
     }
     try{
         console.log(token)
-        const payload = jwt.verify(token,"mysecretkey");
+        const payload = jwt.verify(token,process.env.KEY);
         const query = 'SELECT id FROM public."Users" WHERE username = $1';
         try{
             const ret = await conn.query(query,[payload.username]);
@@ -111,7 +110,7 @@ app.post("/auth/signin", async (req,res) => {
         if (ret.rowCount != 0){
             const matches = await bcrypt.compare(pwd,ret.rows[0].password);
             if(matches){
-                const tokenval = jwt.sign({username: uname},"mysecretkey",{expiresIn: "1h"});
+                const tokenval = jwt.sign({username: uname},process.env.KEY,{expiresIn: "1h"});
                 res.json({token: tokenval})
             }
             else {
