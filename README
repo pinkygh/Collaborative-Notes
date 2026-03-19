@@ -1,0 +1,111 @@
+Collaborative Notes REST API
+
+A backend application for creating and managing notes with multi-user collaboration, built using Node.js, Express, and PostgreSQL.
+Users can securely create notes, share them with others, and control access using read/write permissions.
+
+Features :
+
+User authentication using JWT
+
+Secure password hashing with bcrypt
+
+Create, read, update, delete (CRUD) notes
+
+Share notes with other users
+
+Permission-based access:
+
+Read → view only
+
+Write → edit access
+
+Middleware-based authorization
+
+Transaction handling for sharing/unsharing notes
+
+Tech Stack :
+
+Backend: Node.js, Express
+
+Database: PostgreSQL
+
+Authentication: JWT
+
+Security: bcrypt
+
+API Testing: cURL / Postman
+
+Setup Instructions : 
+1. Clone the repository
+git clone https://github.com/YOUR_USERNAME/collaborative-notes.git
+cd collaborative-notes
+2. Install dependencies
+npm install
+3. Setup environment variables
+
+Create a .env file:
+
+KEY=your_jwt_secret
+DATABASE_URL=your_postgres_connection_string
+4. Run the server
+node server.js
+
+Live API : 
+
+Deployed on Render:
+
+https://collaborative-notes-mb3n.onrender.com
+
+API Endpoints :
+Auth
+Method	Endpoint	Description
+POST	/auth/signup	Register user
+POST	/auth/signin	Login and get JWT
+Notes
+Method	Endpoint	Description
+POST	/create	Create note
+GET	/notes	Get all own notes
+GET	/notes/:id	Get specific note
+PUT	/notes/:id	Update note
+DELETE	/notes/:id	Delete note
+Sharing
+Method	Endpoint	Description
+POST	/notes/:id/shared	Share note
+DELETE	/notes/:id/shared	Remove access
+GET	/notes/:id/shared	View collaborators
+GET	/shared	Notes shared with you
+
+Authentication :
+
+All protected routes require:
+
+Authorization: Bearer <JWT_TOKEN>
+
+Key Concepts Implemented :
+
+Middleware-based authentication & authorization
+
+Role-based access control (owner / read / write)
+
+Transaction handling in PostgreSQL
+
+Secure API design
+
+Example Request
+curl -X POST <baseurl>/signin \
+-H "Content-Type: application/json" \
+-d "{\"username\":\"pink\",\"password\":\"pp@2.\"}"
+
+Future Improvements:
+
+API documentation (Swagger/OpenAPI)
+
+Docker containerization
+
+Pagination & search
+
+Rate limiting & security enhancements
+
+Author:
+
+Developed as a backend project to demonstrate API design, authentication, and multi-user collaboration.
